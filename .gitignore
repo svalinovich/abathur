@@ -1,0 +1,27 @@
+# CMake
+build/
+build-*/
+cmake-build-*/
+
+# Clangd
+.cache/
+
+# Compiled files
+*.o
+*.obj
+*.a
+*.so
+*.out
+
+# Debugging
+gdb_history
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Temporary files
+*.tmp

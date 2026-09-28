@@ -4,22 +4,23 @@
 #include <iostream>
 #include <iterator>
 #include <numeric>
+#include <span>
 
 #include "board.h"
 
 enum PieceType {
-    blackPawn,
-    blackKnight,
-    blackBishop,
-    blackRook,
-    blackQueen,
-    blackKing,
     whitePawn,
     whiteKnight,
     whiteBishop,
     whiteRook,
     whiteQueen,
-    whiteKing
+    whiteKing,
+    blackPawn,
+    blackKnight,
+    blackBishop,
+    blackRook,
+    blackQueen,
+    blackKing
 };
 
 void Board::initBoard() {
@@ -106,24 +107,19 @@ void Board::printBoard() {
         }
     }
 
-    std::cout << "------------------------------------------------------" << "\n";
+    for (auto i{0}; i < 8; ++i) {
+        std::cout << "------------------------------------------------------" << "\n";
+        std::cout << "     |     |     |     |     |     |     |     |     |" << "\n";
+        std::cout << "  " << 8 - i << "  |";
+        std::span<char> row = std::span<char>(board).subspan(63 - 7 - (8 * i), 8);
 
-    for (auto i{0}; i < 64; ++i) {
-        if (i % 8 == 0) {
-            if (i == 0) {
-                std::cout << "     |     |     |     |     |     |     |     |     |" << "\n";
-                std::cout << "  " << (64 - i) / 8 << "  |";
-            } else {
-                std::cout << "\n" << "------------------------------------------------------";
-                std::cout << "\n"
-                          << "     |     |     |     |     |     |     |     |     |";
-                std::cout << "\n" << "  " << (64 - i) / 8 << "  |";
-            }
+        for (char pieceSymbol : row) {
+            std::cout << "  " << pieceSymbol << "  |";
         }
 
-        std::cout << "  " << board[i] << "  |";
+        std::cout << "\n";
     }
 
-    std::cout << "\n" << "------------------------------------------------------" << "\n";
+    std::cout << "------------------------------------------------------" << "\n";
     std::cout << "     |  a  |  b  |  c  |  d  |  e  |  f  |  g  |  h  |" << "\n";
 }

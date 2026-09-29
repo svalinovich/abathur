@@ -1,8 +1,4 @@
-#include <algorithm>
-#include <bit>
-#include <cstdint>
 #include <iostream>
-#include <iterator>
 #include <numeric>
 #include <span>
 
@@ -32,9 +28,8 @@ void Board::initBoard() {
     bitboard[PieceType::whiteQueen] = 0x0000000000000008ULL;
     bitboard[PieceType::whiteKing] = 0x0000000000000010ULL;
 
-    whiteBitboard = std::accumulate(
-        bitboard + PieceType::whitePawn, bitboard + PieceType::whiteKing, uint64_t{0},
-        [](uint64_t initial, uint64_t piece) { return initial | piece; });
+    whiteBitboard = std::accumulate(bitboard + PieceType::whitePawn, bitboard + PieceType::whiteKing, uint64_t{0},
+                                    [](uint64_t initial, uint64_t piece) { return initial | piece; });
 
     // black init
     bitboard[PieceType::blackPawn] = 0x00FF000000000000ULL;
@@ -44,9 +39,8 @@ void Board::initBoard() {
     bitboard[PieceType::blackQueen] = 0x0800000000000000ULL;
     bitboard[PieceType::blackKing] = 0x1000000000000000ULL;
 
-    blackBitboard = std::accumulate(
-        bitboard + PieceType::blackPawn, bitboard + PieceType::blackKing, uint64_t{0},
-        [](uint64_t initial, uint64_t piece) { return initial | piece; });
+    blackBitboard = std::accumulate(bitboard + PieceType::blackPawn, bitboard + PieceType::blackKing, uint64_t{0},
+                                    [](uint64_t initial, uint64_t piece) { return initial | piece; });
 
     std::cout << "Board initialized." << "\n";
 }

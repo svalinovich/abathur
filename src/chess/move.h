@@ -4,8 +4,9 @@
 #include "chess/board.h"
 #include <string_view>
 
+namespace Move {
 uint16_t convertMove(const std::string_view stringInput);
-
 void makeMove(Board &board, const uint16_t move);
+} // namespace Move
 
 #endif

@@ -1,5 +1,6 @@
+#include "move.h"
 #include "chess/board.h"
-#include <string_view>
+#include <cstdint>
 
 /*
  * @brief Converts a string representation of a move to a 16-bit move.
@@ -14,22 +15,21 @@
  * @return Move represented as a 16-bit unsigned short.
  *
  * move => [ special = 2 bits | promotion = 2 bits | to = 6 bits | from = 6 bits ]
- * promotion: 00 - knight, 01 - bishop, 10 - rook, 11 - queen
  * special: 00 - nothing, 01 - castling, 10 - en passant, 11 - promotion
+ * promotion: 00 - knight, 01 - bishop, 10 - rook, 11 - queen
  */
 
-uint16_t convertMove(const std::string_view stringInput) {
+uint16_t Move::convertMove(const std::string_view stringInput) {
     std::string_view source{stringInput.substr(0, 2)};
     std::string_view destination{stringInput.substr(2, 2)};
     uint16_t convertedMove{0};
 
-    uint8_t convertedSource{static_cast<uint8_t>(source[0] - 'a' + (8 * (source[1] - '1')))};
-
-    uint8_t convertedDestination{static_cast<uint8_t>(destination[0] - 'a' + (8 * (destination[1] - '1')))};
+    uint8_t convertedSource{static_cast<uint8_t>((source[0] - 'a') + (8 * (source[1] - '1')))};
+    uint8_t convertedDestination{static_cast<uint8_t>((destination[0] - 'a') + (8 * (destination[1] - '1')))};
 
     // in case of promotion, the input can be "a7a8q" which represents promotion to queen
-    if (stringInput.length() == 5) {
-    }
+    // if (stringInput.length() == 5) {
+    // }
 
     convertedMove |= convertedDestination;
     convertedMove <<= 6;
@@ -55,16 +55,24 @@ uint16_t convertMove(const std::string_view stringInput) {
  * @note This will not work for capturing pieces.
  */
 
-void makeMove(Board &board, const uint16_t move) {
+void Move::makeMove(Board &board, const uint16_t move) {
     // unpacking commands from move
-    uint8_t from{static_cast<uint8_t>(move & 0x003F)};
-    uint8_t to{static_cast<uint8_t>((move >> 6) & 0x003F)};
+    uint8_t from{static_cast<uint8_t>(move & 0x003FULL)};
+    uint8_t to{static_cast<uint8_t>((move >> 6) & 0x003FULL)};
     // TODO: uint8_t flags{static_cast<uint8_t>((move & 0xF000) >> 12)};
 
+    uint64_t fromMask{0x1ULL << from};
+    uint64_t toMask{0x1ULL << to};
+
     for (uint64_t &pieces : board.bitboard) {
-        if (pieces & (0x1 << from)) {
+        if (pieces & toMask) {
+            // delete piece if captured
+            pieces &= ~toMask;
+        }
+
+        if (pieces & fromMask) {
             // deletes piece on position "from", and adds on position "to"
-            pieces ^= (0x1 << from) | (0x1 << to);
+            pieces ^= fromMask | toMask;
         }
     }
 }

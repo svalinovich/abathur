@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string>
 
 #include "chess/board.h"
 #include "chess/move.h"
@@ -12,7 +11,10 @@ int main() {
     board.initBoard();
     board.printBoard();
 
-    // makeMove(board, convertMove());
+    Move::makeMove(board, Move::convertMove("e2e4"));
+    std::cout << "\n";
+    board.printBoard();
+    Move::makeMove(board, Move::convertMove("d7d5"));
     std::cout << "\n";
     board.printBoard();
 

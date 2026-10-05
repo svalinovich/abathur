@@ -51,8 +51,6 @@ uint16_t Move::convertMove(const std::string_view stringInput) {
  * move => [ special = 2 bits | promotion = 2 bits | to = 6 bits | from = 6 bits ]
  * promotion: 00 - knight, 01 - bishop, 10 - rook, 11 - queen
  * special: 00 - nothing, 01 - castling, 10 - en passant, 11 - promotion
- *
- * @note This will not work for capturing pieces.
  */
 
 void Move::makeMove(Board &board, const uint16_t move) {

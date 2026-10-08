@@ -1,6 +1,7 @@
 #include "move.h"
-#include "chess/board.h"
+#include "board/board.h"
 #include <cstdint>
+#include <vector>
 
 /*
  * @brief Converts a string representation of a move to a 16-bit move.
@@ -73,4 +74,14 @@ void Move::makeMove(Board &board, const uint16_t move) {
             pieces ^= fromMask | toMask;
         }
     }
+}
+
+/*
+ * @brief Generates all legal
+ */
+
+std::vector<uint16_t> Move::generateLegalMoves(uint64_t piece) {
+    std::vector<uint16_t> generatedMoves{};
+
+    return generatedMoves;
 }

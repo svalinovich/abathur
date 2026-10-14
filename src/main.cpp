@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "board/board.h"
-#include "move/move.h"
+#include "board.h"
+#include "move.h"
 
 int main() {
     std::cout << "Perfection goal that changes. Never stops moving. Can chase, cannot catch."

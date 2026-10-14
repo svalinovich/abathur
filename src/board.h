@@ -5,9 +5,9 @@
 
 class Board {
   public:
-    uint64_t bitboard[12] = {0};
-    uint64_t whiteBitboard{0};
-    uint64_t blackBitboard{0};
+    std::uint64_t bitboard[12] = {0};
+    std::uint64_t whiteBitboard{0};
+    std::uint64_t blackBitboard{0};
 
     void initBoard();
     void printBoard();

@@ -28,8 +28,8 @@ void Board::initBoard() {
     bitboard[PieceType::whiteQueen] = 0x0000000000000008ULL;
     bitboard[PieceType::whiteKing] = 0x0000000000000010ULL;
 
-    whiteBitboard = std::accumulate(bitboard + PieceType::whitePawn, bitboard + PieceType::whiteKing, uint64_t{0},
-                                    [](uint64_t initial, uint64_t piece) { return initial | piece; });
+    whiteBitboard = std::accumulate(bitboard + PieceType::whitePawn, bitboard + PieceType::whiteKing, std::uint64_t{0},
+                                    [](std::uint64_t initial, std::uint64_t piece) { return initial | piece; });
 
     // black init
     bitboard[PieceType::blackPawn] = 0x00FF000000000000ULL;
@@ -39,8 +39,8 @@ void Board::initBoard() {
     bitboard[PieceType::blackQueen] = 0x0800000000000000ULL;
     bitboard[PieceType::blackKing] = 0x1000000000000000ULL;
 
-    blackBitboard = std::accumulate(bitboard + PieceType::blackPawn, bitboard + PieceType::blackKing, uint64_t{0},
-                                    [](uint64_t initial, uint64_t piece) { return initial | piece; });
+    blackBitboard = std::accumulate(bitboard + PieceType::blackPawn, bitboard + PieceType::blackKing, std::uint64_t{0},
+                                    [](std::uint64_t initial, std::uint64_t piece) { return initial | piece; });
 
     std::cout << "Board initialized." << "\n";
 }
@@ -50,7 +50,7 @@ void Board::printBoard() {
     std::fill(std::begin(board), std::end(board), ' ');
 
     for (auto i{0}; i < 12; ++i) {
-        uint64_t piece{bitboard[i]};
+        std::uint64_t piece{bitboard[i]};
 
         while (piece) {
             int square{std::countr_zero(piece)};

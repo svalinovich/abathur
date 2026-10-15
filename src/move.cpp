@@ -1,5 +1,5 @@
 #include "move.h"
-#include "board.h"
+#include "position.h"
 #include <cstdint>
 #include <vector>
 
@@ -54,7 +54,7 @@ std::uint16_t Move::convertMove(const std::string_view stringInput) {
  * special: 00 - nothing, 01 - castling, 10 - en passant, 11 - promotion
  */
 
-void Move::makeMove(Board &board, const std::uint16_t move) {
+void Move::makeMove(Position &position, const std::uint16_t move) {
     // unpacking commands from move
     std::uint8_t from{static_cast<std::uint8_t>(move & 0x003FULL)};
     std::uint8_t to{static_cast<std::uint8_t>((move >> 6) & 0x003FULL)};
@@ -63,7 +63,7 @@ void Move::makeMove(Board &board, const std::uint16_t move) {
     std::uint64_t fromMask{0x1ULL << from};
     std::uint64_t toMask{0x1ULL << to};
 
-    for (std::uint64_t &pieces : board.bitboard) {
+    for (std::uint64_t &pieces : position.m_bitboard) {
         if (pieces & toMask) {
             // delete piece if captured
             pieces &= ~toMask;
@@ -82,12 +82,13 @@ void Move::makeMove(Board &board, const std::uint16_t move) {
  * @param piece selected piece to have all moves generated for.
  */
 
-std::vector<std::uint16_t> Move::generateMoves([[maybe_unused]] std::uint64_t piece) {
+std::vector<std::uint16_t> Move::generateMoves([[maybe_unused]] const Position &position,
+                                               [[maybe_unused]] std::uint64_t piece) {
     std::vector<std::uint16_t> generatedMoves{};
 
     return generatedMoves;
 }
 
-bool Move::isLegal([[maybe_unused]] const Board &board, [[maybe_unused]] const std::uint16_t move) {
+bool Move::isLegal([[maybe_unused]] const Position &position, [[maybe_unused]] const std::uint16_t move) {
     return false;
 }

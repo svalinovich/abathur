@@ -1,56 +1,14 @@
 #include <iostream>
-#include <numeric>
 #include <span>
 
 #include "board.h"
-
-enum PieceType {
-    whitePawn,
-    whiteKnight,
-    whiteBishop,
-    whiteRook,
-    whiteQueen,
-    whiteKing,
-    blackPawn,
-    blackKnight,
-    blackBishop,
-    blackRook,
-    blackQueen,
-    blackKing
-};
-
-void Board::initBoard() {
-    // white init
-    bitboard[PieceType::whitePawn] = 0x000000000000FF00ULL;
-    bitboard[PieceType::whiteKnight] = 0x0000000000000042ULL;
-    bitboard[PieceType::whiteBishop] = 0x0000000000000024ULL;
-    bitboard[PieceType::whiteRook] = 0x0000000000000081ULL;
-    bitboard[PieceType::whiteQueen] = 0x0000000000000008ULL;
-    bitboard[PieceType::whiteKing] = 0x0000000000000010ULL;
-
-    whiteBitboard = std::accumulate(bitboard + PieceType::whitePawn, bitboard + PieceType::whiteKing, std::uint64_t{0},
-                                    [](std::uint64_t initial, std::uint64_t piece) { return initial | piece; });
-
-    // black init
-    bitboard[PieceType::blackPawn] = 0x00FF000000000000ULL;
-    bitboard[PieceType::blackKnight] = 0x4200000000000000ULL;
-    bitboard[PieceType::blackBishop] = 0x2400000000000000ULL;
-    bitboard[PieceType::blackRook] = 0x8100000000000000ULL;
-    bitboard[PieceType::blackQueen] = 0x0800000000000000ULL;
-    bitboard[PieceType::blackKing] = 0x1000000000000000ULL;
-
-    blackBitboard = std::accumulate(bitboard + PieceType::blackPawn, bitboard + PieceType::blackKing, std::uint64_t{0},
-                                    [](std::uint64_t initial, std::uint64_t piece) { return initial | piece; });
-
-    std::cout << "Board initialized." << "\n";
-}
 
 void Board::printBoard() {
     char board[64];
     std::fill(std::begin(board), std::end(board), ' ');
 
     for (auto i{0}; i < 12; ++i) {
-        std::uint64_t piece{bitboard[i]};
+        std::uint64_t piece{m_currentPosition.m_bitboard[i]};
 
         while (piece) {
             int square{std::countr_zero(piece)};

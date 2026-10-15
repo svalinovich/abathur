@@ -8,13 +8,12 @@ int main() {
               << "\n";
 
     Board board;
-    board.initBoard();
     board.printBoard();
 
-    Move::makeMove(board, Move::convertMove("e2e4"));
+    Move::makeMove(board.m_currentPosition, Move::convertMove("e2e4"));
     std::cout << "\n";
     board.printBoard();
-    Move::makeMove(board, Move::convertMove("d7d5"));
+    Move::makeMove(board.m_currentPosition, Move::convertMove("d7d5"));
     std::cout << "\n";
     board.printBoard();
 

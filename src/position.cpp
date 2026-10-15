@@ -20,6 +20,10 @@ enum PieceType {
     blackKing
 };
 
+/*
+ * @brief Default constructor. Sets up initial chessboard position.
+ */
+
 Position::Position() {
     // white init
     m_bitboard[PieceType::whitePawn] = 0x000000000000FF00ULL;
@@ -47,6 +51,15 @@ Position::Position() {
 
     std::cout << "Initial position loaded." << "\n";
 }
+
+/*
+ * @brief Constructor from a given position.
+ *
+ * @details Constructs a position from a given position represented as an array of 12 bitboards. After copying the
+ * array, it also updates m_whiteBitboard and m_blackBitboard.
+ *
+ * @param bitboard Represents the board as an array of 12 bitboards, one for each piece type and color.
+ */
 
 Position::Position(const std::uint64_t (&bitboard)[12]) {
     std::copy(std::begin(bitboard), std::end(bitboard), m_bitboard);

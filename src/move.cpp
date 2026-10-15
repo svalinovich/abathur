@@ -1,7 +1,5 @@
 #include "move.h"
 #include "position.h"
-#include <cstdint>
-#include <vector>
 
 /*
  * @brief Converts a string representation of a move to a 16-bit move.
@@ -46,7 +44,7 @@ std::uint16_t Move::convertMove(const std::string_view stringInput) {
  * unpacked then the selected bitboard is XOR-ed so that the old piece position is deleted, and the
  * new one added.
  *
- * @param board reference to the board in order to change its state
+ * @param position reference to the position in order to change its state
  * @param move 16-bit integer which encodes each move
  *
  * move => [ special = 2 bits | promotion = 2 bits | to = 6 bits | from = 6 bits ]

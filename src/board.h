@@ -5,7 +5,7 @@
 
 class Board {
   public:
-    Position m_currentPosition{};
+    Position m_currentPosition{}; // TODO: this should probably be a pointer for easy position switching
     void printBoard();
 };
 
